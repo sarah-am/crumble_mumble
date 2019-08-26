@@ -25,13 +25,6 @@ class Recipe(models.Model):
 
 
 class Ingredient(models.Model):
-	name = models.CharField(max_length=100)
-	
-	def __str__(self):
-		return self.name
-
-
-class Measurement(models.Model):
 	GRAMS = "g"
 	CUP = "cup"
 	TBS = "Tbs"
@@ -55,11 +48,6 @@ class Measurement(models.Model):
 class Instruction(models.Model):
 	description = models.TextField()
 	recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="instructions")
-
-
-class SavedRecipe(models.Model):
-	recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="saved")
-	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="saved_recipes")
 
 
 def create_slug(instance, new_slug=None):

@@ -21,7 +21,9 @@
 					    	<img src="{{recipe.image.url}}" class="card-img-top image-crop image-sm">
 					      	<div class="card-body">
 					        	<h5 class="card-title">{{recipe.name}}</h5>
-					        	<a href="{% url 'recipe-details' recipe.slug %}" class="btn btn-outline-pink col-11">Recipe</a>
+					        	{% comment %}
+					        		<a href="{% url 'recipe-details' recipe.slug %}" class="btn btn-outline-pink col-11">Recipe</a>
+					        	{% endcomment %}
 					      	</div>
 					    </div>
 					  </div>
