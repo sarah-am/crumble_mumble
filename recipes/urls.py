@@ -11,7 +11,6 @@ urlpatterns = [
     path('recipes/saved/', views.saved_recipe_list, name="saved-recipe-list"),
 
     path('save/<recipe_id>/', views.save_recipe, name="save-recipe"),
-    path('ingredints/', views.get_ingredients, name="get-ingredients"),
 
 ]
 

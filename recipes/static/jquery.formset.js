@@ -53,8 +53,8 @@
             },
 
             insertDeleteLink = function(row) {
-                var delCssSelector = $.trim(options.deleteCssClass).replace(/\s+/g, '.'),
-                    addCssSelector = $.trim(options.addCssClass).replace(/\s+/g, '.');
+                var delCssSelector = options.deleteCssClass.trim().replace(/\s+/g, '.'),
+                    addCssSelector = options.addCssClass.trim().replace(/\s+/g, '.');
                 if (row.is('TR')) {
                     // If the forms are laid out in table rows, insert
                     // the remove button into the last table cell:
@@ -78,6 +78,7 @@
                         del = row.find('input:hidden[id $= "-DELETE"]'),
                         buttonRow = row.siblings("a." + addCssSelector + ', .' + options.formCssClass + '-add'),
                         forms;
+                        console.log(del.length)
                     if (del.length) {
                         // We're dealing with an inline formset.
                         // Rather than remove this form from the DOM, we'll mark it as deleted
@@ -191,8 +192,8 @@
             addButton.click(function() {
                 var formCount = parseInt(totalForms.val()),
                     row = options.formTemplate.clone(true).removeClass('formset-custom-template'),
-                    buttonRow = $($(this).parents('tr.' + options.formCssClass + '-add').get(0) || this),
-                    delCssSelector = $.trim(options.deleteCssClass).replace(/\s+/g, '.');
+                    buttonRow = $($(this).parents('tr.' + options.formCssClass + '-add').get(0) || this)
+                    delCssSelector = options.deleteCssClass.trim().replace(/\s+/g, '.');
                 applyExtraClasses(row, formCount);
                 row.insertBefore(buttonRow).show();
                 row.find(childElementSelector).each(function() {
@@ -218,10 +219,10 @@
     $.fn.formset.defaults = {
         prefix: 'form',                  // The form prefix for your django formset
         formTemplate: null,              // The jQuery selection cloned to generate new form instances
-        addText: '<i class="fas fa-plus"></i> add another',          // Text for the add link
-        deleteText: '<i class="fas fa-trash-alt"></i>',            // Text for the delete link
-        addCssClass: 'btn btn-outline-pink mb-3',          // CSS class applied to the add link
-        deleteCssClass: 'btn btn-outline-pink my-auto ml-3',    // CSS class applied to the delete link
+        addText: 'add another',          // Text for the add link
+        deleteText: 'remove',            // Text for the delete link
+        addCssClass: 'add-row',          // CSS class applied to the add link
+        deleteCssClass: 'delete-row',    // CSS class applied to the delete link
         formCssClass: 'dynamic-form',    // CSS class applied to each form in a formset
         extraClasses: [],                // Additional CSS classes, which will be applied to each form in turn
         keepFieldValues: '',             // jQuery selector for fields whose values should be kept when the form is cloned

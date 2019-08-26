@@ -3,15 +3,11 @@
 
 {% block content %}
 	<script type="text/javascript">
-        $(function() {
-            $(".inline.{{ ingredient_form.prefix }}").formset({
-                prefix: "{{ ingredient_form.prefix }}",
-            })
-            $(".inline.{{ instruction_form.prefix }}").formset({
-                prefix: "{{ instruction_form.prefix }}",
-            })
-        })
-    </script>
+    $(function() {
+        $('.inline.{{ ingredient_form.prefix }}').formset({prefix: '{{ ingredient_form.prefix }}'});
+        $('.inline.{{ instruction_form.prefix }}').formset({prefix: '{{ instruction_form.prefix }}'});
+    })
+	</script>
 
 	<div class="card m-auto col-11 p-0">
 		<div class="card-body">
@@ -28,6 +24,7 @@
 			                {{ ingredient_form.non_form_errors }}
 			                {{ ingredient_form.management_form }}
 			                {% for form in ingredient_form %}
+			                
 			                	{{ form.id }}
 			                    <div class="inline {{ ingredient_form.prefix }} row col-12">
 			                    	<div class="mr-1">
@@ -38,7 +35,8 @@
 			                        </div>
 			                        <div class="mx-1">
 			                        	{{ form.ingredient|as_crispy_field }}
-			                        </div>                      
+			                        </div>
+			                        {{ form.DELETE }}                  
 			                    </div>
 			                {% endfor %}
 			            </fieldset>
@@ -48,9 +46,11 @@
 			                {{ instruction_form.non_form_errors }}
 			                {{ instruction_form.management_form }}
 			                {% for form in instruction_form %}
+
 			                	{{ form.id }}
 			                    <div class="inline {{ instruction_form.prefix }} row col-12">
 			                        {{ form.description|as_crispy_field}}
+			                        {{ form.DELETE }}
 			                    </div>
 			                {% endfor %}
 			            </fieldset>

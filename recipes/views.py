@@ -4,7 +4,7 @@ from django.views.generic import CreateView, UpdateView
 from django.contrib.auth.decorators import login_required
 
 from .models import Recipe, Category, Ingredient, Measurement, SavedRecipe
-from .forms import RecipeForm, IngredientForm, IngredientFormSet, InstructionFormSet
+from .forms import IngredientFormSet, InstructionFormSet
 
 
 def recipes_list(request):
@@ -59,7 +59,7 @@ def save_recipe(request, recipe_id):
 class RecipeUpdateView(UpdateView):
 	template_name = 'update_recipe.html'
 	model = Recipe
-	form_class = RecipeForm
+	fields = ['name','category','image','description']
 	success_url = 'recipe-details'
 
 	def get(self, request, *args, **kwargs):
@@ -92,6 +92,9 @@ class RecipeUpdateView(UpdateView):
 		return redirect(self.get_success_url(), self.object.slug)
 
 	def form_invalid(self, form, ingredient_form, instruction_form):
+		print("ingredients",ingredient_form.errors)
+		print("instructions",instruction_form.errors)
+		print("form",form.errors)
 		return self.render_to_response(
 			self.get_context_data(form=form,
 								  ingredient_form=ingredient_form,
@@ -102,14 +105,13 @@ class RecipeUpdateView(UpdateView):
 class RecipeCreateView(CreateView):
 	template_name = 'create_recipe.html'
 	model = Recipe
-	form_class = RecipeForm
+	fields = ['name','category','image','description']
 	success_url = 'recipe-details'
 
 
 	def get(self, request, *args, **kwargs):
 		self.object = None
-		form_class = self.get_form_class()
-		form = self.get_form(form_class)
+		form = self.get_form()
 		ingredient_form = IngredientFormSet()
 		instruction_form = InstructionFormSet()
 		return self.render_to_response(
@@ -130,14 +132,14 @@ class RecipeCreateView(CreateView):
 			return self.form_invalid(form, ingredient_form, instruction_form)
 
 	def form_valid(self, form, ingredient_form, instruction_form):
-		self.object = form.save(commit=False)
-		self.object.owner = self.request.user
-		self.object.save()
-		ingredient_form.instance = self.object
+		object = form.save(commit=False)
+		object.owner = self.request.user
+		object.save()
+		ingredient_form.instance = object
 		ingredient_form.save()
-		instruction_form.instance = self.object
+		instruction_form.instance = object
 		instruction_form.save()
-		return redirect(self.get_success_url(), self.object.slug)
+		return redirect(self.success_url, object.slug)
 
 	def form_invalid(self, form, ingredient_form, instruction_form):
 		return self.render_to_response(
@@ -146,8 +148,5 @@ class RecipeCreateView(CreateView):
 								  instruction_form=instruction_form))
 
 
-@login_required
-def get_ingredients(request):
-	response = [ingredient.name for ingredient in Ingredient.objects.all()]
-	return JsonResponse(response, safe=False)
+
 	

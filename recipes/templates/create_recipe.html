@@ -3,15 +3,12 @@
 
 {% block content %}
 	<script type="text/javascript">
-        $(function() {
-            $(".inline.{{ ingredient_form.prefix }}").formset({
-                prefix: "{{ ingredient_form.prefix }}",
-            })
-            $(".inline.{{ instruction_form.prefix }}").formset({
-                prefix: "{{ instruction_form.prefix }}",
-            })
-        })
-    </script>
+    $(function() {
+        $('.inline.{{ ingredient_form.prefix }}').formset();
+        $('.inline.{{ instruction_form.prefix }}').formset();
+    })
+	</script>
+
 
 	<div class="card m-auto col-11 p-0">
 		<div class="card-body">
