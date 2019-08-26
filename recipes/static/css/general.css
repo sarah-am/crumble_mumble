@@ -1,0 +1,49 @@
+.image-crop {
+	object-fit: cover;
+}
+
+.image-sm {
+	height: 250px;
+}
+
+.image-lg {
+	height: 500px
+}
+
+.btn-outline-beige{
+	background-color: #FFF;
+	color:#8b8378;
+	border-color: #8b8378;
+	border-radius: 30px;
+}
+
+.btn-outline-beige:hover,
+.btn-outline-beige:focus,
+.btn-outline-beige:active,
+.btn-outline-beige.active,
+.open .dropdown-toggle.btn-outline-beige {
+	background-color: #8b8378;
+	color:#FFF;
+	border-color: #8b8378;
+ }
+
+ .btn-outline-pink{
+	background-color: #FFF;
+	color:rgb(241, 156, 154);
+	border-color: rgb(241, 156, 154);
+	border-width: 3px;
+}
+
+.btn-outline-pink:hover,
+.btn-outline-pink:focus,
+.btn-outline-pink:active,
+.btn-outline-pink.active,
+.open .dropdown-toggle.btn-outline-pink {
+	background-color: #8b8378;
+	color:#FFF;
+	border-color: #8b8378;
+ }
+
+ .d-inherit{
+ 	display: inherit;
+ }

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}
+{% endblock title %}
+
+{% block content %}
+
+	<div class="card col-11 m-auto p-3">
+		<div class="row">
+			{% for saved_recipe in user.saved_recipes.all %}
+				<div class="col-sm-3" id="{{saved_recipe.recipe.category.name}}">
+				    <div class="card">
+				    	<img src="{{saved_recipe.recipe.image.url}}" class="card-img-top image-crop image-sm">
+				      	<div class="card-body">
+				        	<h5 class="card-title">{{saved_recipe.recipe.name}}</h5>
+				        	<a href="{% url 'recipe-details' saved_recipe.recipe.slug %}" class="btn btn-outline-pink col-11">Recipe</a>
+				      	</div>
+				    </div>
+				  </div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock content%}
