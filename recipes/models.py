@@ -14,10 +14,11 @@ class Category(models.Model):
 class Recipe(models.Model):
 	category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
 	name = models.CharField(max_length=150)
-	image = models.ImageField(blank=True, null=True)
+	image = models.ImageField()
 	description = models.TextField()
 	owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="recipes")
 	slug = models.SlugField(blank=True)
+	private = models.BooleanField()
 	
 
 	def __str__(self):
