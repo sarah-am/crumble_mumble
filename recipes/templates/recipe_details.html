@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}
+{% endblock title %}
+
+{% block content %}
+	<div class="card col-lg-8 col-sm-11 m-auto p-0">
+
+		<div class="card-body">
+			<div class="row"> 
+				<div class="col-lg-6 col-sm-11">
+					<h3 class="text-center">{{recipe.name}}</h3>
+					<p>Recipe by: {{recipe.owner}}</p>
+					<p>"{{recipe.description}}"</p>
+				</div>
+				<div class="col-lg-6 col-sm-11">
+					<img src="{{recipe.image.url}}" class="image-crop image-lg col-12">
+				</div>
+			</div>
+		</div>
+
+		<div class="card-header">
+		    Ingredients
+		</div>
+		<div class="card-body">
+			<ul>
+			{% for measurement in recipe.measurements.all %}
+				 <li>{{measurement.amount}} {{measurement.measure}} - {{measurement.ingredient}}</li>
+			{% endfor %}
+			</ul>
+		</div>
+		<div class="card-header">
+		    Method
+		</div>
+		<div class="card-body">
+			<ol>
+			{% for instruction in recipe.instructions.all %}
+				 <li>{{instruction.description}}</li>
+			{% endfor %}
+			</ol>
+		</div>
+		
+	</div>
+{% endblock content %}

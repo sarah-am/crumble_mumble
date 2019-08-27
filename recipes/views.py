@@ -3,12 +3,10 @@ from .models import Recipe, Category
 
 
 def recipes_list(request):
-	if request.GET.get('q'):
-		recipes = Recipe.objects.filter(name__contains=request.GET.get('q'))
-	else:
-		recipes = Recipe.objects.all()
 
+	recipes = Recipe.objects.all()
 	categories = Category.objects.all()
+
 	context = {
 		"recipes" : recipes,
 		"categories" :categories
@@ -16,7 +14,10 @@ def recipes_list(request):
 	return render(request, "recipes_list.html", context)
 
 
+def recipe_details(request, recipe_slug):
+	recipe = Recipe.objects.get(slug=recipe_slug)
 
-
-
-	
+	context = {
+		"recipe" : recipe,
+	}
+	return render(request, "recipe_details.html", context)
