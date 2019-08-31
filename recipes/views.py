@@ -21,3 +21,7 @@ def recipe_details(request, recipe_slug):
 		"recipe" : recipe,
 	}
 	return render(request, "recipe_details.html", context)
+
+
+def my_recipes_list(request):
+	return render(request, 'my_recipes_list.html')
