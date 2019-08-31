@@ -9,6 +9,9 @@
 		<div class="card-body">
 			<div class="row"> 
 				<div class="col-lg-6 col-sm-11">
+					{% if user == recipe.owner %}
+						<a href="{% url 'update-recipe' recipe.slug %}">Edit</a>
+					{% endif %}
 					<h3 class="text-center">{{recipe.name}}</h3>
 					<p>Recipe by: {{recipe.owner}}</p>
 					<p>"{{recipe.description}}"</p>
