@@ -4,7 +4,7 @@ from .models import Recipe, Category
 
 def recipes_list(request):
 
-	recipes = Recipe.objects.all()
+	recipes = Recipe.objects.filter(private=False)
 	categories = Category.objects.all()
 
 	context = {
