@@ -11,6 +11,15 @@
 				<div class="col-lg-6 col-sm-11">
 					{% if user == recipe.owner %}
 						<a href="{% url 'update-recipe' recipe.slug %}">Edit</a>
+					{% else %}
+						<button class="btn btn-light" id="save-btn" onclick="save()">
+							<i class="far fa-save
+										{% if saved %}
+											pink-text
+										{% else %}
+											beige-text
+										{% endif %}" ></i>
+						</button>
 					{% endif %}
 					<h3 class="text-center">{{recipe.name}}</h3>
 					<p>Recipe by: {{recipe.owner}}</p>
@@ -44,4 +53,29 @@
 		</div>
 		
 	</div>
+	<script type="text/javascript">
+	function save() {
+	    $.ajax(
+	        {
+	            type:'GET',
+	            url: '{% url "save-recipe" recipe.id %}',
+	            error: function(){
+	                console.log('error');
+	            },
+	            success: function(data){
+	            	console.log(data)
+	            	if (data.saved){
+	            		$("#save-btn").addClass("pink-text");
+	            		$("#save-btn").removeClass("beige-text");
+	            	}else{
+	            		console.log("data")
+	            		$("#save-btn").addClass("beige-text");
+	            		$("#save-btn").removeClass("pink-text");
+	            	}
+	                
+	            },
+	        }
+	    );
+	}
+	</script>
 {% endblock content %}

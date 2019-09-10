@@ -1,13 +1,15 @@
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, UpdateView
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 
-from .models import Recipe, Category, Ingredient, Instruction
+from .models import Recipe, Category, Ingredient, Instruction, SavedRecipe
 from .forms import RecipeForm, IngredientFormSet, InstructionFormSet
 
 
 def recipes_list(request):
 
-	recipes = Recipe.objects.all()
+	recipes = Recipe.objects.filter(private=False)
 	categories = Category.objects.all()
 
 	context = {
@@ -19,11 +21,19 @@ def recipes_list(request):
 
 def recipe_details(request, recipe_slug):
 	recipe = Recipe.objects.get(slug=recipe_slug)
-
+	if SavedRecipe.objects.filter(recipe=recipe, user=request.user):
+		saved = True
+	else:
+		saved = False
 	context = {
 		"recipe" : recipe,
+		"saved" : saved
 	}
 	return render(request, "recipe_details.html", context)
+
+
+def my_recipes_list(request):
+	return render(request, 'my_recipes_list.html')
 
 
 class RecipeCreateView(CreateView):
@@ -110,3 +120,19 @@ class RecipeUpdateView(UpdateView):
 							  ingredient_form=ingredient_form,
 							  instruction_form=instruction_form))
 
+
+
+@login_required
+def saved_recipe_list(request):
+	return render(request, "saved_recipe_list.html")
+
+
+@login_required
+def save_recipe(request, recipe_id):
+	saved_recipe, created = SavedRecipe.objects.get_or_create(recipe_id=recipe_id, user=request.user)
+	if created:
+		saved = True
+	else:
+		saved = False
+		saved_recipe.delete()
+	return JsonResponse({"saved" : saved})

@@ -51,6 +51,12 @@ class Instruction(models.Model):
 	recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="instructions")
 
 
+class SavedRecipe(models.Model):
+	recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="saved")
+	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="saved_recipes")
+
+	
+
 def create_slug(instance, new_slug=None):
     slug = slugify (instance.name)
     if new_slug is not None:

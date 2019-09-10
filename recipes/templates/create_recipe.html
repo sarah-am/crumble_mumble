@@ -12,42 +12,52 @@
         });
     })
 	</script>
-	<div class="col-7">
-		<form action="." method="POST" enctype="multipart/form-data">
-			{% csrf_token %}
-			{{form|crispy}}
-
-			<legend class="card-title">Ingredients</legend>
-			<div class="inline {{ ingredient_form.prefix }}">
-			    {{ ingredient_form.non_form_errors }}
-			    {{ ingredient_form.management_form }}
-
-			    {% for form in ingredient_form %}
-			    	<div class="row">
-				    	<div class="mr-1">
-				        	{{ form.measure|as_crispy_field }}
-				    	</div>
-				    	<div class="mx-1">
-				        	{{ form.amount|as_crispy_field }}
-				        </div>
-				        <div class="mx-1">
-				        	{{ form.ingredient|as_crispy_field }}
-				        </div>
-				    </div>                      
-			    {% endfor %}
-			</div>
+	<div class="card m-auto col-11 p-0">
+		<div class="card-body">
+	    	<h2 class="card-title">Add Recipe</h2>
+				<form action="." method="POST" enctype="multipart/form-data">
+					{% csrf_token %}
+					<div class="row">
+				            <div class="col-lg-4 col-sm-11">
+				                {{ form|crispy }}
+				            </div>
+					<div class="col-lg-7 col-sm-11 pl-5 mb-5 ml-5 pl-5">
 
 
-			<legend class="card-title mt-3">Instructions</legend> 
-			<div class="inline {{ instruction_form.prefix }}">                    
-                {{ instruction_form.non_form_errors }}
-                {{ instruction_form.management_form }}
+					<fieldset>
+						<legend class="card-title">Ingredients</legend>
+					    {{ ingredient_form.non_form_errors }}
+					    {{ ingredient_form.management_form }}
 
-                {% for form in instruction_form.forms %}
-                    {{ form.description|as_crispy_field}}
-                {% endfor %}
-            </div>
-			<button type="submit">Add recipe</button>
-		</form>
+					    {% for form in ingredient_form %}
+					    	<div class="row inline {{ ingredient_form.prefix }} col-12">
+						    	<div class="mr-1">
+						        	{{ form.measure|as_crispy_field }}
+						    	</div>
+						    	<div class="mx-1">
+						        	{{ form.amount|as_crispy_field }}
+						        </div>
+						        <div class="mx-1">
+						        	{{ form.ingredient|as_crispy_field }}
+						        </div>
+						    </div>                      
+					    {% endfor %}
+					</fieldset>
+					<fieldset>
+					<legend class="card-title mt-3">Instructions</legend>               
+			            {{ instruction_form.non_form_errors }}
+			            {{ instruction_form.management_form }}
+
+			            {% for form in instruction_form.forms %}
+			                <div class="inline {{ instruction_form.prefix }}">
+			                	{{ form.description|as_crispy_field}}
+			                </div>
+			            {% endfor %}
+		        	</fieldset>
+		        	</div>
+					<button type="submit">Add recipe</button>
+				</form>
+
+		</div>
 	</div>
 {% endblock content %}
