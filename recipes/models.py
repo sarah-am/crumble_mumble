@@ -14,10 +14,11 @@ class Category(models.Model):
 class Recipe(models.Model):
 	category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
 	name = models.CharField(max_length=150)
-	image = models.ImageField(blank=True, null=True)
+	image = models.ImageField()
 	description = models.TextField()
 	owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="recipes")
 	slug = models.SlugField(blank=True)
+	private = models.BooleanField()
 	
 
 	def __str__(self):
@@ -25,13 +26,6 @@ class Recipe(models.Model):
 
 
 class Ingredient(models.Model):
-	name = models.CharField(max_length=100)
-	
-	def __str__(self):
-		return self.name
-
-
-class Measurement(models.Model):
 	GRAMS = "g"
 	CUP = "cup"
 	TBS = "Tbs"
@@ -61,6 +55,7 @@ class SavedRecipe(models.Model):
 	recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="saved")
 	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="saved_recipes")
 
+	
 
 def create_slug(instance, new_slug=None):
     slug = slugify (instance.name)

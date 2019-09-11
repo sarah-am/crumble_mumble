@@ -11,8 +11,6 @@
 			<button class="btn btn-outline-beige mb-3 mr-3 col-lg-2 col-xs-6" id="btn-{{category.name}}">{{category.name}}</button>
 		{% endfor %}
 	</div>
-
-
 	<div class="card col-11 m-auto p-3">
 			<div class="row">
 				{% for recipe in recipes %}
@@ -40,7 +38,6 @@
 				$( "#btn-"+'{{category.name}}' ).removeClass("active");
 			{% endfor %}
 		});
-
 		{% for category in categories %}
 			$( "#btn-"+'{{category.name}}').click(function() {
 				$( "#"+'{{category.name}}' ).show( "fast" );

@@ -9,6 +9,18 @@
 		<div class="card-body">
 			<div class="row"> 
 				<div class="col-lg-6 col-sm-11">
+					{% if user == recipe.owner %}
+						<a href="{% url 'update-recipe' recipe.slug %}">Edit</a>
+					{% else %}
+						<button class="btn btn-light" id="save-btn" onclick="save()">
+							<i class="far fa-save
+										{% if saved %}
+											pink-text
+										{% else %}
+											beige-text
+										{% endif %}" ></i>
+						</button>
+					{% endif %}
 					<h3 class="text-center">{{recipe.name}}</h3>
 					<p>Recipe by: {{recipe.owner}}</p>
 					<p>"{{recipe.description}}"</p>
@@ -16,21 +28,6 @@
 				<div class="col-lg-6 col-sm-11">
 					<img src="{{recipe.image.url}}" class="image-crop image-lg col-12">
 				</div>
-				{% if user == recipe.owner %}
-						<a class="btn btn-outline-pink" href="{% url 'update-recipe' recipe.slug %}">Edit</a>
-					{% else %}
-					{{saved}}
-						<button class="btn btn-light" onclick="save()">
-							<i 
-								class="far fa-save fa-2x 
-									{% if saved %}
-										pink-text
-									{% else %}
-										beige-text
-									{% endif %}" 
-								id="save-btn"></i>
-						</button>
-					{% endif %}
 			</div>
 		</div>
 
@@ -54,9 +51,8 @@
 			{% endfor %}
 			</ol>
 		</div>
-		
+		<a href="{% url 'export-recipe' recipe.slug %}" class="btn btn-outline-dark mx-auto mb-3 col-4">Export</a>
 	</div>
-
 	<script type="text/javascript">
 	function save() {
 	    $.ajax(
