@@ -16,21 +16,6 @@
 				<div class="col-lg-6 col-sm-11">
 					<img src="{{recipe.image.url}}" class="image-crop image-lg col-12">
 				</div>
-				{% if user == recipe.owner %}
-						<a class="btn btn-outline-pink" href="{% url 'update-recipe' recipe.slug %}">Edit</a>
-					{% else %}
-					{{saved}}
-						<button class="btn btn-light" onclick="save()">
-							<i 
-								class="far fa-save fa-2x 
-									{% if saved %}
-										pink-text
-									{% else %}
-										beige-text
-									{% endif %}" 
-								id="save-btn"></i>
-						</button>
-					{% endif %}
 			</div>
 		</div>
 
@@ -56,30 +41,4 @@
 		</div>
 		
 	</div>
-
-	<script type="text/javascript">
-	function save() {
-	    $.ajax(
-	        {
-	            type:'GET',
-	            url: '{% url "save-recipe" recipe.id %}',
-	            error: function(){
-	                console.log('error');
-	            },
-	            success: function(data){
-	            	console.log(data)
-	            	if (data.saved){
-	            		$("#save-btn").addClass("pink-text");
-	            		$("#save-btn").removeClass("beige-text");
-	            	}else{
-	            		console.log("data")
-	            		$("#save-btn").addClass("beige-text");
-	            		$("#save-btn").removeClass("pink-text");
-	            	}
-	                
-	            },
-	        }
-	    );
-	}
-	</script>
 {% endblock content %}

@@ -15,10 +15,7 @@
       <li class="nav-item active">
         {% if user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'my-recipes-list' %}">My Recipes</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'saved-recipe-list' %}">Saved Recipes</a>
+            <a class="nav-link" href="{% url 'my-recipes-list' %}">my recipes</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'logout' %}">Logout</a>
@@ -33,9 +30,13 @@
         {% endif %}
       </li>
     </ul>
+
+    {% comment %}
     <form class="form-inline my-2 my-lg-0" action="{% url 'recipes-list' %}" method="get">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
       <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
     </form>
+    {% endcomment %}
+    
   </div>
 </nav>
