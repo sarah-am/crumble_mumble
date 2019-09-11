@@ -8,8 +8,11 @@ from .forms import RecipeForm, IngredientFormSet, InstructionFormSet
 
 
 def recipes_list(request):
+	if request.GET.get('q'):
+		recipes = Recipe.objects.filter(name__icontains=request.GET.get('q'), private=False)
+	else:
+		recipes = Recipe.objects.filter(private=False)
 
-	recipes = Recipe.objects.filter(private=False)
 	categories = Category.objects.all()
 
 	context = {

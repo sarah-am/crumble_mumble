@@ -5,6 +5,12 @@
 {% endblock title %}
 
 {% block content %}
+	<div class="col-11 m-auto">
+		<button class="btn btn-outline-beige active mb-3 mr-3 col-lg-2 col-xs-6" id="btn-all">All</button>
+		{% for category in categories %}
+			<button class="btn btn-outline-beige mb-3 mr-3 col-lg-2 col-xs-6" id="btn-{{category.name}}">{{category.name}}</button>
+		{% endfor %}
+	</div>
 	<div class="card col-11 m-auto p-3">
 			<div class="row">
 				{% for recipe in recipes %}
@@ -22,3 +28,29 @@
 	</div>
 
 {% endblock content %}
+
+{% block script %}
+	<script type="text/javascript">
+		$("#btn-all").click(function() {
+			$("#btn-all").addClass("active");
+			{% for category in categories %}
+				$( "#"+'{{category.name}}' ).show( "fast" );
+				$( "#btn-"+'{{category.name}}' ).removeClass("active");
+			{% endfor %}
+		});
+		{% for category in categories %}
+			$( "#btn-"+'{{category.name}}').click(function() {
+				$( "#"+'{{category.name}}' ).show( "fast" );
+				$("#btn-"+'{{category.name}}').addClass("active");
+				$("#btn-all").removeClass("active");
+				var category = '{{category.name}}';
+				{% for category in categories %}
+					if ('{{category.name}}' !== category){
+						$( "#"+'{{category.name}}' ).hide( "fast" );
+						$( "#btn-"+'{{category.name}}' ).removeClass("active");
+					}
+				{% endfor %}
+			});
+		{% endfor %}
+	</script>
+{% endblock script %}
