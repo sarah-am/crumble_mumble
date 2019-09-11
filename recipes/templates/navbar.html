@@ -18,6 +18,12 @@
             <a class="nav-link" href="{% url 'my-recipes-list' %}">my recipes</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="{% url 'recipe-create' %}">add recipe</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'saved-recipe-list' %}">saved recipes</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="{% url 'logout' %}">Logout</a>
           </li>
         {% else %}
