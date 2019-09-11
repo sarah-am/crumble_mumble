@@ -1,5 +1,5 @@
 """
-WSGI config for all_potatoes project.
+WSGI config for baked_potato project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'all_potatoes.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'baked_potato.settings')
 
 application = get_wsgi_application()
