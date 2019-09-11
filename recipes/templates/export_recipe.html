@@ -1,0 +1,25 @@
+<div style="padding: 20px">
+	<h1 style="text-align: center; font-size: 40px; margin-bottom: -200px">{{recipe.name}}</h1>
+	<img src="{{recipe.image.url}}" width="500px" style="object-fit: cover;">
+	<p style="">Recipe by: {{recipe.owner}}</p>
+	<p style="">{{recipe.description}}</p>
+	
+	<hr>
+	<h3> Ingredients </h3>
+	<div>
+		<ul>
+		{% for measurement in recipe.measurements.all %}
+			 <li>{{measurement.amount}} {{measurement.measure}} - {{measurement.ingredient}}</li>
+		{% endfor %}
+		</ul>
+	</div>
+	<hr>
+	<h3> Method </h3>
+	<div>
+		<ol>
+		{% for instruction in recipe.instructions.all %}
+			 <li>{{instruction.description}}</li>
+		{% endfor %}
+		</ol>
+	</div>
+</div>

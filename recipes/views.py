@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import CreateView, UpdateView
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from easy_pdf.rendering import render_to_pdf_response
 
 from .models import Recipe, Category, Ingredient, Instruction, SavedRecipe
 from .forms import RecipeForm, IngredientFormSet, InstructionFormSet
@@ -139,3 +140,14 @@ def save_recipe(request, recipe_id):
 		saved = False
 		saved_recipe.delete()
 	return JsonResponse({"saved" : saved})
+
+
+@login_required
+def export_recipe(request, recipe_slug):
+	recipe = Recipe.objects.get(slug=recipe_slug)
+	context = { "recipe" : recipe }
+	return render_to_pdf_response(request, 'export_recipe.html', context)
+
+
+
+
