@@ -2,10 +2,6 @@
 	background-color: #fffcf9
 }
 
-.pink-background {
-	background-color: rgb(241, 156, 154)
-}
-
 .beige-text {
 	color: #8b8378
 }
@@ -26,4 +22,8 @@
 	border-bottom: black;
     border-bottom-width: 3px;
     border-bottom-style: double;
+}
+
+a:hover{
+	color: #2c6163
 }
