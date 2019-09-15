@@ -7,7 +7,7 @@
 }
 
 .image-lg {
-	height: 500px
+	height: 400px
 }
 
 .btn-outline-beige{
@@ -29,8 +29,8 @@
 
  .btn-outline-pink{
 	background-color: #FFF;
-	color:rgb(241, 156, 154);
-	border-color: rgb(241, 156, 154);
+	color:#2c6163;
+	border-color: #2c6163;
 	border-width: 3px;
 }
 
@@ -39,9 +39,9 @@
 .btn-outline-pink:active,
 .btn-outline-pink.active,
 .open .dropdown-toggle.btn-outline-pink {
-	background-color: #8b8378;
+	background-color: #2c6163;
 	color:#FFF;
-	border-color: #8b8378;
+	border-color: #2c6163;
  }
 
  .d-inherit{

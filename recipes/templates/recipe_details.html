@@ -4,9 +4,9 @@
 {% endblock title %}
 
 {% block content %}
-	<div class="card col-lg-8 col-sm-11 m-auto p-0">
+	<div class=" m-auto p-0">
 
-		<div class="card-body">
+		<div class="card-body col-lg-10 col-sm-11 m-auto">
 			<div class="row"> 
 				<div class="col-lg-6 col-sm-11">
 					<h3 class="text-center">{{recipe.name}}</h3>
@@ -19,26 +19,24 @@
 			</div>
 		</div>
 
-		<div class="card-header">
-		    Ingredients
+		<div class="row">
+			<div class="col-lg-5">
+				<h5 class="navbar-border pb-2 pl-4">Ingredients</h5>
+				<ul>
+				{% for ingredient in recipe.ingredients.all %}
+					 <li>{{ingredient.amount}} {{ingredient.measure}} - {{ingredient.ingredient}}</li>
+				{% endfor %}
+				</ul>
+			</div>
+			<div class="col-lg-7">
+			    <h5 class="navbar-border pb-2 pl-4">How to Make</h5>
+			    <ol class="pr-4 text-justify">
+				{% for instruction in recipe.instructions.all %}
+					 <li>{{instruction.description}}</li>
+					 <br>
+				{% endfor %}
+				</ol>
+			</div>
 		</div>
-		<div class="card-body">
-			<ul>
-			{% for measurement in recipe.measurements.all %}
-				 <li>{{measurement.amount}} {{measurement.measure}} - {{measurement.ingredient}}</li>
-			{% endfor %}
-			</ul>
-		</div>
-		<div class="card-header">
-		    Method
-		</div>
-		<div class="card-body">
-			<ol>
-			{% for instruction in recipe.instructions.all %}
-				 <li>{{instruction.description}}</li>
-			{% endfor %}
-			</ol>
-		</div>
-		
 	</div>
 {% endblock content %}

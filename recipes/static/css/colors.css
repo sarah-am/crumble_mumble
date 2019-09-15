@@ -1,5 +1,5 @@
 .beige-background {
-	background-color: #8b8378
+	background-color: #fffcf9
 }
 
 .pink-background {
@@ -10,6 +10,20 @@
 	color: #8b8378
 }
 
-.pink-text {
-	color: rgb(241, 156, 154)
+.green-text {
+	color: #2c6163
+}
+
+.peru-text{
+	color: #C4844A
+}
+
+.nav-link{
+	color: #C4844A
+}
+
+.navbar-border {
+	border-bottom: black;
+    border-bottom-width: 3px;
+    border-bottom-style: double;
 }
