@@ -4,54 +4,54 @@
 {% endblock title %}
 
 {% block content %}
-	<div class="card col-lg-8 col-sm-11 m-auto p-0">
-
-		<div class="card-body">
+	<div class=" m-auto p-0">
+		<div class="card-body col-lg-10 col-sm-11 m-auto">
+			<br>
 			<div class="row"> 
 				<div class="col-lg-6 col-sm-11">
-					{% if user == recipe.owner %}
-						<a href="{% url 'update-recipe' recipe.slug %}">Edit</a>
-					{% else %}
-						<button class="btn btn-light" id="save-btn" onclick="save()">
-							<i class="far fa-save
-										{% if saved %}
-											pink-text
-										{% else %}
-											beige-text
-										{% endif %}" ></i>
-						</button>
-					{% endif %}
 					<h3 class="text-center">{{recipe.name}}</h3>
 					<p>Recipe by: {{recipe.owner}}</p>
 					<p>"{{recipe.description}}"</p>
+					<div class="">
+						<a href="{% url 'export-recipe' recipe.slug %}" class="green-text btn btn-outline-peru"><i class="far fa-file-pdf"></i></a>
+						{% if user == recipe.owner %}
+							<a href="{% url 'update-recipe' recipe.slug %}" class="btn btn-outline-peru"><i class="far fa-edit"></i></a>
+						{% else %}
+							<button class="btn btn-outline-peru" id="save-btn" onclick="save()">
+								<i class="far fa-save
+											{% if saved %}
+												green-text
+											{% else %}
+												peru-text
+											{% endif %}" ></i>
+							</button>
+						{% endif %}
+					</div>
 				</div>
 				<div class="col-lg-6 col-sm-11">
 					<img src="{{recipe.image.url}}" class="image-crop image-lg col-12">
 				</div>
 			</div>
 		</div>
-
-		<div class="card-header">
-		    Ingredients
-		</div>
-		<div class="card-body">
-			<ul>
-			{% for measurement in recipe.measurements.all %}
-				 <li>{{measurement.amount}} {{measurement.measure}} - {{measurement.ingredient}}</li>
-			{% endfor %}
-			</ul>
-		</div>
-		<div class="card-header">
-		    Method
-		</div>
-		<div class="card-body">
-			<ol>
-			{% for instruction in recipe.instructions.all %}
-				 <li>{{instruction.description}}</li>
-			{% endfor %}
-			</ol>
-		</div>
-		<a href="{% url 'export-recipe' recipe.slug %}" class="btn btn-outline-dark mx-auto mb-3 col-4">Export</a>
+		<div class="row">
+			<div class="col-lg-5">
+				<h5 class="navbar-border pb-2 pl-4">Ingredients</h5>
+				<ul>
+				{% for ingredient in recipe.ingredients.all %}
+					 <li>{{ingredient.amount}} {{ingredient.measure}} - {{ingredient.ingredient}}</li>
+				{% endfor %}
+				</ul>
+			</div>
+			<div class="col-lg-7">
+			    <h5 class="navbar-border pb-2 pl-4">How to Make</h5>
+			    <ol class="pr-4 text-justify">
+				{% for instruction in recipe.instructions.all %}
+					 <li>{{instruction.description}}</li>
+					 <br>
+				{% endfor %}
+				</ol>
+			</div>
+		</div> 
 	</div>
 	<script type="text/javascript">
 	function save() {

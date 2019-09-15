@@ -41,7 +41,7 @@ class Ingredient(models.Model):
 
 	amount = models.DecimalField(max_digits=10, decimal_places=2)
 	measure = models.CharField(max_length=20, choices=MEASURES)
-	recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="measurements")
+	recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="ingredients")
 	ingredient = models.CharField(max_length=120)
 
 
