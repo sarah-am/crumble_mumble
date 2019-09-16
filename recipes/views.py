@@ -25,7 +25,8 @@ def recipes_list(request):
 
 def recipe_details(request, recipe_slug):
 	recipe = Recipe.objects.get(slug=recipe_slug)
-	if SavedRecipe.objects.filter(recipe=recipe, user=request.user):
+
+	if request.user.is_authenticated and SavedRecipe.objects.filter(recipe=recipe, user=request.user):
 		saved = True
 	else:
 		saved = False

@@ -16,7 +16,7 @@
 						<a href="{% url 'export-recipe' recipe.slug %}" class="green-text btn btn-outline-peru"><i class="far fa-file-pdf"></i></a>
 						{% if user == recipe.owner %}
 							<a href="{% url 'update-recipe' recipe.slug %}" class="btn btn-outline-peru"><i class="far fa-edit"></i></a>
-						{% else %}
+						{% elif user.isauthenticated %}
 							<button class="btn btn-outline-peru" id="save-btn" onclick="save()">
 								<i class="far fa-save
 											{% if saved %}
@@ -35,10 +35,15 @@
 		</div>
 		<div class="row">
 			<div class="col-lg-5">
-				<h5 class="navbar-border pb-2 pl-4">Ingredients</h5>
+				<h5 class="navbar-border pb-2 pl-4">
+					Ingredients 
+					<div class="float-right ">
+						Portion:<input type="number" id="portion" value="1" class="col-6" onkeyup="changeAmounts()">
+					</div>
+				</h5>
 				<ul>
 				{% for ingredient in recipe.ingredients.all %}
-					 <li>{{ingredient.amount}} {{ingredient.measure}} - {{ingredient.ingredient}}</li>
+					 <li><span id="ingredient-amount-{{ingredient.id}}">{{ingredient.amount}}</span> {{ingredient.measure}} - {{ingredient.ingredient}}</li>
 				{% endfor %}
 				</ul>
 			</div>
@@ -77,5 +82,13 @@
 	        }
 	    );
 	}
+
+	function changeAmounts(){
+		portion = $("#portion").val();
+		{% for ingredient in recipe.ingredients.all %}
+			$("#ingredient-amount-{{ingredient.id}}").html({{ingredient.amount}}*portion);
+		{% endfor %}
+	}
+
 	</script>
 {% endblock content %}
