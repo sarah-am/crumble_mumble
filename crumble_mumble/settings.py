@@ -25,7 +25,7 @@ SECRET_KEY = '=!*x@lr^it!c#3c1nx9!fl02fn_$$q3ir^dn&)48-o_ey1c&bw'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['157.245.200.46']
+ALLOWED_HOSTS = ['157.245.200.46', 'crumblemumble.codeunicorn.io']
 
 
 # Application definition
