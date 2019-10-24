@@ -38,5 +38,8 @@
 				</ol>
 			</div>
 		</div>
+		{% if user == recipe.owner %}
+		<a href="{% url 'update-recipe' recipe.slug %}">Edit</a>
+	{% endif %}
 	</div>
 {% endblock content %}
