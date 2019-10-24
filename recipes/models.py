@@ -11,6 +11,7 @@ class Category(models.Model):
 	def __str__(self):
 		return self.name
 
+
 class Recipe(models.Model):
 	category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
 	name = models.CharField(max_length=150)
@@ -19,7 +20,6 @@ class Recipe(models.Model):
 	owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="recipes")
 	slug = models.SlugField(blank=True)
 	private = models.BooleanField()
-	
 
 	def __str__(self):
 		return self.name
@@ -45,14 +45,13 @@ class Ingredient(models.Model):
 	ingredient = models.CharField(max_length=120)
 
 
-
 class Instruction(models.Model):
 	description = models.TextField()
 	recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="instructions")
 
 
 def create_slug(instance, new_slug=None):
-    slug = slugify (instance.name)
+    slug = slugify(instance.name)
     if new_slug is not None:
         slug = new_slug
     qs = Recipe.objects.filter(slug=slug)
