@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+	<script type="text/javascript">
+    $(function() {
+        $('.inline.{{ ingredient_form.prefix }}').formset({
+            prefix: '{{ ingredient_form.prefix }}'
+        });
+        $('.inline.{{ instruction_form.prefix }}').formset({
+            prefix: '{{ instruction_form.prefix }}'
+        });
+    });
+	</script>
+
+	<form action="." method="POST" enctype="multipart/form-data">
+		{% csrf_token %}
+		{{form|crispy}}
+	    {{ ingredient_form.non_form_errors }}
+	    {{ ingredient_form.management_form }}
+
+	    {% for form in ingredient_form %}
+	    	<div class="inline {{ ingredient_form.prefix }} row">
+		    	<div class="mr-1">
+		        	{{ form.measure|as_crispy_field }}
+		    	</div>
+		    	<div class="mx-1">
+		        	{{ form.amount|as_crispy_field }}
+		        </div>
+		        <div class="mx-1">
+		        	{{ form.ingredient|as_crispy_field }}
+		        </div>
+		    </div>                      
+	    {% endfor %}
+	    {{ instruction_form.non_form_errors }}
+	    {{ instruction_form.management_form }}
+
+	    {% for form in instruction_form.forms %}
+	    	<div class="inline {{ instruction_form.prefix }}" >
+	        	{{ form.description|as_crispy_field}}
+	        </div>
+	    {% endfor %}
+		<button type="submit">Add recipe</button>
+	</form>
+{% endblock content %}

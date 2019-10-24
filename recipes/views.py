@@ -1,9 +1,11 @@
-from django.shortcuts import render
-from .models import Recipe, Category
+from django.shortcuts import render, redirect
+from django.views.generic import CreateView
+
+from .models import Recipe, Category, Ingredient, Instruction
+from .forms import RecipeForm, IngredientFormSet, InstructionFormSet
 
 
 def recipes_list(request):
-
 	recipes = Recipe.objects.filter(private=False)
 	categories = Category.objects.all()
 
@@ -25,3 +27,47 @@ def recipe_details(request, recipe_slug):
 
 def my_recipes_list(request):
 	return render(request, 'my_recipes_list.html')
+
+
+class RecipeCreateView(CreateView):
+	template_name = 'create_recipe.html'
+	form_class = RecipeForm
+	success_url = 'recipe-details'
+
+	def get(self, request, *args, **kwargs):
+		self.object = None
+
+		form = self.get_form()
+		ingredient_form = IngredientFormSet()
+		instruction_form = InstructionFormSet()
+
+		return self.render_to_response(
+			self.get_context_data(form=form, ingredient_form=ingredient_form, instruction_form=instruction_form)
+		)
+
+	def post(self, request, *args, **kwargs):
+		self.object = None
+		form_class = self.get_form_class()
+		form = form_class(request.POST, request.FILES)
+		ingredient_form = IngredientFormSet(self.request.POST)
+		instruction_form = InstructionFormSet(self.request.POST)
+		if (form.is_valid() and ingredient_form.is_valid() and instruction_form.is_valid()):
+			return self.form_valid(form, ingredient_form, instruction_form)
+		else:
+			return self.form_invalid(form, ingredient_form, instruction_form)
+
+	def form_valid(self, form, ingredient_form, instruction_form):
+		object = form.save(commit=False)
+		object.owner = self.request.user
+		object.save()
+		ingredient_form.instance = object
+		ingredient_form.save()
+		instruction_form.instance = object
+		instruction_form.save()
+		return redirect(self.success_url, object.slug)
+
+	def form_invalid(self, form, ingredient_form, instruction_form):
+		return self.render_to_response(
+			self.get_context_data(form=form, ingredient_form=ingredient_form, instruction_form=instruction_form)
+		)	
+
