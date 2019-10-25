@@ -38,8 +38,41 @@
 				</ol>
 			</div>
 		</div>
-		{% if user == recipe.owner %}
-		<a href="{% url 'update-recipe' recipe.slug %}">Edit</a>
-	{% endif %}
+{% if user == recipe.owner %}
+	<a href="{% url 'update-recipe' recipe.slug %}">Edit</a>
+{% else %}
+	<button class="btn btn-light" id="save-btn" onclick="save()">
+		<i class="far fa-save
+					{% if saved %}
+						pink-text
+					{% else %}
+						beige-text
+					{% endif %}" ></i>
+	</button>
+{% endif %}
 	</div>
+<script type="text/javascript">
+	function save() {
+		$.ajax(
+	        {
+	            type:'GET',
+	            url: '{% url "save-recipe" recipe.id %}',
+	            error: function(){
+	                console.log('error');
+	            },
+	            success: function(data){
+            		if (data.saved){
+	            		$("#save-btn").addClass("text-dark");
+	            		$("#save-btn").removeClass("text-light");
+	            	}else{
+	            		$("#save-btn").addClass("text-light");
+	            		$("#save-btn").removeClass("text-dark");
+	            	}
+	                
+	            },
+	        }
+	    );
+	}
+</script>
 {% endblock content %}
+

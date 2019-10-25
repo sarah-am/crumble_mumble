@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}
+Saved Recipes
+{% endblock title %}
+
+{% block content %}
+			{% for saved_recipe in user.saved_recipes.all %}
+				<img src="{{saved_recipe.recipe.image.url}}">
+				<h5>{{saved_recipe.recipe.name}}</h5>
+				<a href="{% url 'recipe-details' saved_recipe.recipe.slug %}">Recipe</a>
+			{% endfor %}
+{% endblock content%}

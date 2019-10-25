@@ -73,3 +73,11 @@ def create_slug(instance, new_slug=None):
 def generate_slug(instance, *args, **kwargs):
     if not instance.slug:
         instance.slug=create_slug(instance)
+
+
+class SavedRecipe(models.Model):
+	recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="saved")
+	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="saved_recipes")
+
+
+	

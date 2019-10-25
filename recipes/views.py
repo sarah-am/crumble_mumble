@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, UpdateView
-
-from .models import Recipe, Category, Ingredient, Instruction
+from .models import Recipe, Category, Ingredient, Instruction, SavedRecipe
 from .forms import RecipeForm, IngredientFormSet, InstructionFormSet
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 
 
 def recipes_list(request):
@@ -18,9 +19,14 @@ def recipes_list(request):
 
 def recipe_details(request, recipe_slug):
 	recipe = Recipe.objects.get(slug=recipe_slug)
-
+	if SavedRecipe.objects.filter(recipe=recipe, user=request.user):
+		saved = True
+	else:
+		saved = False
+	
 	context = {
 		"recipe" : recipe,
+		"saved" : saved
 	}
 	return render(request, "recipe_details.html", context)
 
@@ -69,7 +75,7 @@ class RecipeCreateView(CreateView):
 	def form_invalid(self, form, ingredient_form, instruction_form):
 		return self.render_to_response(
 			self.get_context_data(form=form, ingredient_form=ingredient_form, instruction_form=instruction_form)
-		)	
+		)   
 
 
 class RecipeUpdateView(UpdateView):
@@ -87,7 +93,7 @@ class RecipeUpdateView(UpdateView):
 		return self.render_to_response(
 			self.get_context_data(form=form,
 								  ingredient_form=ingredient_form,
-								  instruction_form=instruction_form))	
+								  instruction_form=instruction_form))   
 
 	def post(self, request, *args, **kwargs):
 		self.object = self.get_object()
@@ -111,4 +117,20 @@ class RecipeUpdateView(UpdateView):
 		return self.render_to_response( 
 			self.get_context_data(form=form, ingredient_form=ingredient_form, instruction_form=instruction_form)
 			)
+
+
+@login_required
+def saved_recipe_list(request):
+	return render(request, "saved_recipe_list.html")
+
+
+@login_required
+def save_recipe(request, recipe_id):
+	saved_recipe, created = SavedRecipe.objects.get_or_create(recipe_id=recipe_id, user=request.user)
+	if created:
+		saved = True
+	else:
+		saved = False
+		saved_recipe.delete()
+	return JsonResponse({"saved" : saved})
 

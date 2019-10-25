@@ -8,6 +8,8 @@ urlpatterns = [
     path('my-recipes/', views.my_recipes_list, name="my-recipes-list"),
     path('create/recipe/', views.RecipeCreateView.as_view(), name="recipe-create"),
     path('update/<slug>/', views.RecipeUpdateView.as_view(), name="update-recipe" ),
+	path('recipes/saved/', views.saved_recipe_list, name="saved-recipe-list"),
+	path('save/<recipe_id>/', views.save_recipe, name="save-recipe"),
 
 ]
 
