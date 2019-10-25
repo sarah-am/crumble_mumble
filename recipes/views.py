@@ -4,6 +4,7 @@ from .models import Recipe, Category, Ingredient, Instruction, SavedRecipe
 from .forms import RecipeForm, IngredientFormSet, InstructionFormSet
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from easy_pdf.rendering import render_to_pdf_response
 
 
 def recipes_list(request):
@@ -123,7 +124,6 @@ class RecipeUpdateView(UpdateView):
 def saved_recipe_list(request):
 	return render(request, "saved_recipe_list.html")
 
-
 @login_required
 def save_recipe(request, recipe_id):
 	saved_recipe, created = SavedRecipe.objects.get_or_create(recipe_id=recipe_id, user=request.user)
@@ -134,3 +134,8 @@ def save_recipe(request, recipe_id):
 		saved_recipe.delete()
 	return JsonResponse({"saved" : saved})
 
+@login_required
+def export_recipe(request, recipe_slug):
+	recipe = Recipe.objects.get(slug=recipe_slug)
+	context = { "recipe" : recipe }
+	return render_to_pdf_response(request, 'export_recipe.html', context)

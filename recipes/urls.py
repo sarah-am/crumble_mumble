@@ -10,6 +10,7 @@ urlpatterns = [
     path('update/<slug>/', views.RecipeUpdateView.as_view(), name="update-recipe" ),
 	path('recipes/saved/', views.saved_recipe_list, name="saved-recipe-list"),
 	path('save/<recipe_id>/', views.save_recipe, name="save-recipe"),
+    path('export/<recipe_slug>/', views.export_recipe, name="export-recipe"),
 
 ]
 
