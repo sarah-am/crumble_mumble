@@ -8,7 +8,11 @@ from easy_pdf.rendering import render_to_pdf_response
 
 
 def recipes_list(request):
-	recipes = Recipe.objects.filter(private=False)
+	if request.GET.get('q'):
+		recipes = Recipe.objects.filter(name__icontains=request.GET.get('q'), private=False)
+	else:
+		recipes = Recipe.objects.filter(private=False)
+
 	categories = Category.objects.all()
 
 	context = {
